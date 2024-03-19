@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen.koh2.Service">
+  <resultMap type="com.ezen.koh2.InsaDTO" id="insa">
+  	<result property="id" column="id"/>
+  	<result property="spot" column="spot"/>
+  	<result property="fpay" column="fpay"/>
+  	<result property="pay" column="pay"/>
+  	<result property="totpay" column="totpay"/>
+  </resultMap>
+  <resultMap type="com.ezen.koh2.MyinfoDTO" id="myinfo">
+  	<result property="id" column="id"/>
+  	<result property="name" column="name"/>
+  	<result property="phone" column="phone"/>
+  </resultMap>
+  <resultMap type="com.ezen.koh2.ScoreDTO" id="score">
+  	<result property="id" column="id"/>
+  	<result property="kor" column="kor"/>
+  	<result property="eng" column="eng"/>
+  	<result property="mat" column="mat"/>
+  	<result property="tot" column="tot"/>
+  	<collection property="myinfoDTO" ofType="com.ezen.koh2.MyinfoDTO" resultMap="myinfo"/>
+  	<collection property="insaDTO" ofType="com.ezen.koh2.InsaDTO" resultMap="insa"/>
+  </resultMap>
+  
+  <select id="print" resultMap="score">
+  	select sc.id, my.name, my.phone, sc.kor+sc.eng+sc.mat as tot, insa.spot, insa.fpay+insa.pay as totpay
+  	from score0319 sc join myinfo0319 my on sc.id = my.id join insa0319 insa on sc.id = insa.id
+  </select>
+</mapper>
